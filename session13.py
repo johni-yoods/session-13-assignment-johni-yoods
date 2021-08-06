@@ -1,25 +1,19 @@
-# session-13-assignment-johni-yoods
-Name : Johni Yoods Durai
-
-email : durai.mj@mistralsolutions.com
-
-notebook :https://colab.research.google.com/drive/1JpxONxViMll01WkfgA0t_19ehlHhOLww?usp=sharing
-
-# Session 13
+from collections import namedtuple
 
 
-Calculate the number of violations by car make.
-
-
-## lazy iterator
-#### def brands(self,f_name):
+class CarBrands:
+    def __init__(self):
+        """named tuple for the parking ticket informations"""
+        self.park_tk = namedtuple('park_tk','Summons_Number Plate_ID Registration_State Plate_Type Issue_Date Violation_Code Vehicle_Body_Type Vehicle_Make Violation_Description')
+        self.violations_brand = {}
+    
+    def brands(self,f_name):
         """lazy iterator to iterate parking ticket informations"""
         with open(f_name, encoding='utf8', errors='ignore') as f:
             for line in f:
                 yield line.strip('\n')
-  
- ## Find violations              
- #### def find_violations(self):
+    
+    def find_violations(self):
         """find the violations made by the car brands"""
         info = namedtuple('park_tk', ['tickets'])
         files = "nyc_parking_tickets_extract-1.csv"
@@ -42,13 +36,12 @@ Calculate the number of violations by car make.
                 self.violations_brand[bg]=0
             else:
                 self.violations_brand[bg]+=1
-
-
+        
+        
         for i in self.violations_brand:
             print(i,self.violations_brand[i])
-
-## Find the most violated brand
-#### def most_violated(self):
+            
+    def most_violated(self):
         """most violated car brand"""
         prev_count = 0
         for i in self.violations_brand:
@@ -59,4 +52,7 @@ Calculate the number of violations by car make.
         print("\nmost violated car brand:",most_violated_brand)
 
 
+c = CarBrands()
 
+c.find_violations()
+c.most_violated()
